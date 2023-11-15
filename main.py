@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from apis import devices
+from apis import devices, push
 from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
@@ -14,7 +14,7 @@ app.add_middleware(
 )
 
 # List of routers
-routers: list[FastAPI.router] = [devices.router]
+routers: list[FastAPI.router] = [devices.router, push.router]
 
 for router in routers:
     app.include_router(router)
