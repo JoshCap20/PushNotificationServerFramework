@@ -7,7 +7,17 @@ from fastapi import Depends
 
 
 class DeviceService:
-    """A service for registering and managing devices."""
+    """
+    A service for registering and managing devices.
+
+    Attributes:
+        session (Session): The database session to use. Injected by FastAPI.
+
+    Methods:
+        register_device(device: Device) -> Device: Register a device.
+        get_registered_devices() -> list[Device]: Get all registered devices.
+        clear_registered_devices() -> None: Clear all registered devices.
+    """
 
     def __init__(self, session: Session = Depends(db_session)):
         """
@@ -44,7 +54,8 @@ class DeviceService:
         return [device.to_model() for device in devices]
 
     def clear_registered_devices(self) -> None:
-        """Clear all registered devices.
+        """
+        Clear all registered devices.
 
         This method deletes all registered devices from the database.
         """
