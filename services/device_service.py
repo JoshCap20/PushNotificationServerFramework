@@ -14,7 +14,7 @@ class DeviceService:
         Initialize the DeviceService.
 
         Args:
-            session (Session): The database session to use.
+            session (Session): The database session to use. Injected by FastAPI.
         """
         self._session = session
 

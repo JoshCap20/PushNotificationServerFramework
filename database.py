@@ -6,7 +6,15 @@ from settings import getenv
 
 
 def _engine_str(name: str = getenv("DB_NAME")) -> str:
-    """Helper function for reading settings from environment variables to produce connection string."""
+    """
+    Helper function for reading settings from environment variables to produce connection string.
+
+    Arguments:
+        name (str): The name of the database. Defaults to the value of the "DB_NAME" environment variable.
+
+    Returns:
+        str: The connection string for the database.
+    """
     dialect = "postgresql+psycopg2"
     user = getenv("DB_USERNAME")
     password = getenv("DB_PASSWORD")
@@ -20,7 +28,12 @@ engine = sqlalchemy.create_engine(_engine_str(), echo=True)
 
 
 def db_session():
-    """Generator function offering dependency injection of SQLAlchemy Sessions."""
+    """
+    Generator function offering dependency injection of SQLAlchemy Sessions.
+
+    Yields:
+        session: SQLAlchemy Session object
+    """
     session = Session(engine)
     try:
         yield session

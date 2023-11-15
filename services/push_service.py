@@ -8,7 +8,7 @@ class PushService:
     A service for sending push notifications.
 
     Attributes:
-        handler (PushHandler): The handler used to send push notifications.
+        handler (PushHandler): The handler used to send push notifications. Injected by FastAPI.
     """
 
     def __init__(self, handler: PushHandler = Depends()):
