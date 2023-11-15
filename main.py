@@ -1,4 +1,9 @@
-from fastapi import FastAPI
+"""
+This file is the entry point for the FastAPI application. 
+It configures middleware, adds sub-routers, and defines application-level health checks.
+"""
+
+from fastapi import APIRouter, FastAPI
 from apis import devices, push
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -14,8 +19,9 @@ app.add_middleware(
 )
 
 # List of routers
-routers: list[FastAPI.router] = [devices.router, push.router]
+routers: list[APIRouter] = [devices.router, push.router]
 
+# Add routers to app
 for router in routers:
     app.include_router(router)
 
@@ -29,3 +35,7 @@ async def health():
 @app.get("/")
 async def root():
     return {"message": "Hello World"}
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app)
