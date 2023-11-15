@@ -1,6 +1,6 @@
 from sqlalchemy import Column, Integer, String, DateTime, func
 from models import Device
-from entities import EntityBase
+from .entity_base import EntityBase
 
 
 class DeviceEntity(EntityBase):
