@@ -1,7 +1,9 @@
-# PushNotificationServerFramework
+# Push Notification Server Framework for Apple Push Notification service
 
 ## Introduction
 `PushNotificationServerFramework` is an open-source project designed to offer a template for creating remote push notification servers. It simplifies the process of registering devices with the server and provides services for storing, fetching, and clearing device information.
+
+Apple Push Notification service (APNs) is a cloud service that allows approved third-party apps installed on Apple devices to send push notifications from a remote server to users over a secure connection.
 
 ### Features
 - **Device Endpoints**: Facilitates registering and fetching devices with the server.
@@ -12,12 +14,12 @@
 - **FastAPI Framework**: Leverages the FastAPI framework for efficient and easy server development.
 
 ## Prerequisites
-Before installing `PushNotificationServerFramework`, ensure you have the following:
+Before installing this repository, ensure you have the following:
 - Python 3.11
 - Pip package manager
 
 ## Installation
-To install `PushNotificationServerFramework`, follow these steps:
+To install this repository, follow these steps:
 
 1. Clone the repository:
    ```bash
@@ -29,7 +31,7 @@ To install `PushNotificationServerFramework`, follow these steps:
    ```
 
 ## Configuration
-Configure the application by editing `config.py`. Set the necessary parameters like database URI, server host, and port.
+Configure the application by creating an .env file based off the template. Set the necessary parameters like database connection parameters and APNs identifiers.
 
 ## Running the Server
 To start the server, run the following command:
@@ -39,8 +41,6 @@ python main.py
 
 # Endpoints
 ## Devices API
-Use the provided endpoints to register devices with the server.
-
 #### Register a Device
 - **Endpoint**: `/devices/register`
 - **Method**: `POST`
@@ -48,7 +48,6 @@ Use the provided endpoints to register devices with the server.
   ```json
   {
     "token": "unique_device_id",
-    "other_info": "additional_information"
   }
   ```
 
@@ -61,10 +60,32 @@ Use the provided endpoints to register devices with the server.
 - **Method**: `GET`
 
 ## Push API
+#### Send a Push Notification
+- **Endpoint**: `/push/send`
+- **Method**: `POST`
+- **Body**:
+  ```json
+  {
+    "recipients": ["device_token_1", "device_token_2"],
+    "body": "notification_body"
+  }
+  ```
 
+## Design Notes
+
+### Device Entity and Models
+
+The `Device` entity and its model represent a device registered with the server. This device includes the device token and optionally additional device information available in the [UIDevice class](https://developer.apple.com/documentation/uikit/uidevice).
+
+- `token`: The device token used to send push notifications to the device.
+- `name`: The name of the device.
+- `systemName`: The name of the operating system running on the device.
+- `systemVersion`: The current version of the operating system.
+- `model`: The model of the device.
+- `localizedModel`: The model of the device as a localized string.
 
 ## Contributing
-Contributions to `PushNotificationServerFramework` are welcome. Please follow the standard GitHub pull request process to propose changes.
+Contributions to this repository are welcome. Please follow the standard GitHub pull request process to propose changes.
 
 ## License
 This project is licensed under the [MIT License](LICENSE.md).
