@@ -2,12 +2,15 @@ from fastapi import Depends
 from models import Message
 from push import PushHandler
 
-""" 
-send_push(message) -> None
-"""
-
 
 class PushService:
+    """
+    A service for sending push notifications.
+
+    Attributes:
+        handler (PushHandler): The handler used to send push notifications.
+    """
+
     def __init__(self, handler: PushHandler = Depends()):
         """Initialize the Service."""
         self.handler = handler

@@ -5,13 +5,6 @@ from database import db_session
 from sqlalchemy.orm import Session
 from fastapi import Depends
 
-""" 
-Instance Methods:
-    register_device(Device) -> Device
-    get_registered_devices() -> list[Device]
-    clear_registered_devices() -> None
-"""
-
 
 class DeviceService:
     """A service for registering and managing devices."""
