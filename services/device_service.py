@@ -14,23 +14,46 @@ Instance Methods:
 
 
 class DeviceService:
+    """A service for registering and managing devices."""
+
     def __init__(self, session: Session = Depends(db_session)):
-        """Initialize the Service."""
+        """
+        Initialize the DeviceService.
+
+        Args:
+            session (Session): The database session to use.
+        """
         self._session = session
 
     def register_device(self, device: Device) -> Device:
-        """Register a device."""
+        """
+        Register a device.
+
+        Args:
+            device (Device): The device to register.
+
+        Returns:
+            Device: The registered device.
+        """
         device_entity = DeviceEntity.from_model(device)
         self._session.add(device_entity)
         self._session.commit()
         return device_entity.to_model()
 
     def get_registered_devices(self) -> list[Device]:
-        """Get all registered devices."""
+        """
+        Get all registered devices.
+
+        Returns:
+            list[Device]: A list of Device objects representing all registered devices.
+        """
         devices = self._session.execute(select(DeviceEntity)).scalars().all()
         return [device.to_model() for device in devices]
 
     def clear_registered_devices(self) -> None:
-        """Clear all registered devices."""
+        """Clear all registered devices.
+
+        This method deletes all registered devices from the database.
+        """
         self._session.execute(select(DeviceEntity)).delete()
         self._session.commit()
