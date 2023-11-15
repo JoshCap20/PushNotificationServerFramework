@@ -1,11 +1,12 @@
-# Push Notification Server Framework for Apple Push Notification service
+# Push Notification Server Framework
 
 ## Introduction
-`PushNotificationServerFramework` is an open-source project designed to offer a template for creating remote push notification servers for iOS applications. It simplifies the process of registering devices with the server and provides services for storing, fetching, and clearing device information.
+`PushNotificationServerFramework` is an open-source project designed to offer a template for creating remote push notification servers for iOS applications via [Apple Push Notification service](https://developer.apple.com/documentation/usernotifications/setting_up_a_remote_notification_server/sending_notification_requests_to_apns).
 
-Apple Push Notification service (APNs) is a cloud service that allows approved third-party apps installed on Apple devices to send push notifications from a remote server to users over a secure connection.
+It simplifies the process of registering devices with the server and provides services for storing, fetching, and clearing device information, in addition to providing endpoints for sending push notifications to these devices.
 
 ### Features
+- **Premade Models and Entities**: Includes premade models and entities for device and message information.
 - **Device Endpoints**: Facilitates registering and fetching devices with the server.
 - **Push Endpoints**: Provides endpoints for sending push notifications to devices.
 - **Data Persistence**: Utilizes SQLAlchemy ORM for managing database operations.
@@ -47,8 +48,16 @@ To start the server, run the following command:
 python main.py
 ```
 
-# Endpoints
-## Devices API
+## Client-Side Implementation
+To implement push notifications in an iOS application, follow the steps below:
+1. Register the application for push notifications. 
+    - See [Apple Developer documentation](https://developer.apple.com/documentation/usernotifications/registering_your_app_with_apns) for more information.
+2. Request permission from the user to send push notifications.
+3. Register the device with the server.
+    - Post the device token to the `/devices/register` endpoint.
+
+
+## Device Endpoints
 #### Register a Device
 - **Endpoint**: `/devices/register`
 - **Method**: `POST`
@@ -67,7 +76,7 @@ python main.py
 - **Endpoint**: `/devices/clear`
 - **Method**: `GET`
 
-## Push API
+## Push Endpoints
 #### Send a Push Notification
 - **Endpoint**: `/push/send`
 - **Method**: `POST`
@@ -91,6 +100,11 @@ The `Device` entity and its model represent a device registered with the server.
 - `systemVersion`: The current version of the operating system. (Optional, String)
 - `model`: The model of the device. (Optional, String)
 - `localizedModel`: The model of the device as a localized string. (Optional, String)
+
+### FastAPI CORS Middleware
+This middleware was left in the project to allow for cross-origin requests during development. This decision was made to enable CORS with frontend applications during development. However, it is not recommended to enable CORS in production environments as it can lead to security vulnerabilities.
+
+**Note**: CORS is a browser security feature that prevents cross-origin requests. It does not affect requests from iOS applications.
 
 ## Contributing
 Contributions to this repository are welcome. Please follow the standard GitHub pull request process to propose changes.
