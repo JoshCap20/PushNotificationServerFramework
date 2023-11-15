@@ -2,7 +2,7 @@
 
 import sqlalchemy
 from sqlalchemy.orm import Session
-from settings import getenv
+from utils import getenv
 
 
 def _engine_str(name: str = getenv("DB_NAME")) -> str:
